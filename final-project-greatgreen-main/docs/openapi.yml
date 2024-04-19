@@ -1,0 +1,653 @@
+openapi: 3.0.3
+info:
+  title: GreatGreen API
+  description: Interact with the resources of the GreatGreen System
+  version: 1.0.0
+servers:
+  - url: https://localhost:8080/api/v1/
+paths:
+  auth/register:
+    post:
+      description: Sign-up to be part of the Great Green initiative
+      operationId: sign-up
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignUpRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignUpResponse'
+        '400':
+          description: Invalid request data provided
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/ErrorStructure'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/ErrorStructure'
+
+  auth/login:
+    post:
+      description: Login to be part of the Great Green initiative
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        required: true
+      responses:
+        '200':
+          description: On successful login sets the session ID in cookies
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          description: Invalid credentials provided
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/ErrorStructure'
+  /journeys:
+    get:
+      description: Get the list of all the journeys of the logged in user
+      operationId: get-journeys
+      parameters:
+        - name: X-AUTH-TOKEN
+          in: header
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Status values that need to be considered for filter
+          required: false
+          explode: true
+          schema:
+            type: string
+            default: IN_PROGRESS
+            enum:
+              - IN_PROGRESS
+              - COMPLETED
+      responses:
+        '200':
+          description: List of journeys after applying filters from the query params
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Journey'
+        '400':
+          description: Invalid journey parameter values
+          content:
+            application/json: 
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: Invalid status value given
+
+
+
+    post:
+      description: Create a new journey for the logged in user
+      operationId: add-journey
+      parameters:
+        - name: X-AUTH-TOKEN
+          in: header
+          description: ''
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JourneyRequest'
+        required: true
+      responses:
+        '200':
+          description: On creation of journey for the logged in user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Journey'
+        '400':
+          description: Invalid request data provided
+          content:
+            application/json: 
+              schema:
+                type: object
+                properties:
+                  level:
+                    type: string
+                    example: Invalid level value given
+
+
+
+  /journeys/{id}:
+    get:
+      description: Get a single journey details given its ID
+      operationId: get-journey
+      parameters:
+        - name: X-AUTH-TOKEN
+          in: header
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Journey ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Journey Details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Journey'
+        '404':
+          description: Journey with given ID not found
+          content:
+            application/json: 
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Journey not found      
+    patch:
+      description: Update the single journey resource
+      operationId: update-journey
+      parameters:
+        - name: X-AUTH-TOKEN
+          in: header
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Journey ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JourneyPatchRequest'
+        required: true
+      responses:
+        '200':
+          description: Update Successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Journey'
+        '400':
+          description: Invalid request data provided
+          content:
+            application/json: 
+              schema:
+                type: object
+                properties:
+                  provider_id:
+                    type: string
+                    example: Provider does not exist
+                  provider_type:
+                    type: string
+                    example: Invalid provider type given
+  /journeys/{id}/milestones:
+    get:
+      description: Get all the milestones with image and comment for given journey
+      parameters:
+        - name: X-AUTH-TOKEN
+          in: header
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Journey ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: List of milestones for given journey
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MileStone'
+        '404':
+          description: Milestone does not exist
+          content:
+            application/json: 
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Milestone not found
+
+    post:
+      description: Create a new milestone for a journey
+      operationId: create-milestone
+      parameters:
+        - name: X-AUTH-TOKEN
+          in: header
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: Journey ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MileStoneRequest'
+        required: true
+      responses:
+        '200':
+          description: Created milestone details given journey
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MileStone'
+
+  auth/userinfo:
+    get:
+      description: Get information of the current logged in user
+      operationId: getUserInfo
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorStructure'
+ 
+  /badges:
+    get:
+      description: Get all the badges of current logged in user
+      operationId: getUserBadges
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadgesResponse'
+        '400':
+          description: Bad Request - Invalid request format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found - The specified resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+ 
+  /location_centers:
+    get:
+      description: List of all the centers nearby to the given location
+      operationId: getLocationCenters
+      parameters:
+        - name: latitude
+          in: query
+          required: true
+          schema:
+            type: number
+            format: double
+        - name: longitude
+          in: query
+          required: true
+          schema:
+            type: number
+            format: double
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationCentersResponse'
+        '400':
+          description: Bad Request - Invalid request format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not Found - The specified resource was not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+
+
+components:
+  schemas:
+    SignUpRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: John
+        gender:
+          type: string
+          example: MALE
+          enum:
+            - MALE
+            - FEMALE
+            - OTHERS
+        locationX:
+          type: number
+          example: -12.1
+        locationY:
+          type: number
+          example: 12.1
+        passwordConfirmation:
+          type: string
+          example: XSCSzaza==
+        password:
+          type: string
+          example: XSCSzaza==
+        email:
+          type: string
+          example: johndoe@neu.edu
+      required:
+        - name
+        - gender
+        - locationX
+        - locationY
+        - password
+        - passwordConfirmation
+        - email
+    JourneyRequest:
+      type: object
+      properties:
+        provider_id:
+          type: integer
+          example: 12
+        kit_id:
+          type: integer
+          example: 12
+        provider_type:
+          type: string
+          example: AFFILIATION
+        level:
+          type: string
+          description: Level of user
+          example: BEGINNER
+          enum:
+            - BEGINNER
+            - INTERMEDIATE
+            - EXPERT
+      required:
+        - level
+    JourneyPatchRequest:
+      type: object
+      properties:
+        provider_id:
+          type: integer
+          example: 12
+        kit_id:
+          type: integer
+          example: 12
+        provider_type:
+          type: string
+          example: AFFILIATION
+        status:
+          type: string
+          description: Status of the journey
+          example: PENDING
+          enum:
+            - PENDING
+            - IN_PROGRESS
+            - COMPLETED
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+          example: John
+        username:
+          type: string
+          example: abc@abc.com
+        email:
+          type: string
+          example: abc@abc.com
+        gender:
+          type: string
+          example: MALE
+          enum:
+            - MALE
+            - FEMALE
+            - OTHERS
+        locationX:
+          type: number
+          example: -12.1
+        locationY:
+          type: number
+          example: 12.1
+    MileStone:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        user_id:
+          type: integer
+          example: 2
+        provider_type:
+          type: string
+          example: CENTER
+        provider_id:
+          type: integer
+          example: 2
+        journey:
+          $ref: '#/components/schemas/Journey'
+    Journey:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        user_id:
+          type: integer
+          example: 2
+        provider_type:
+          type: string
+          example: CENTER
+        provider_id:
+          type: integer
+          example: 2
+        status:
+          type: string
+          description: Status of the journey
+          example: PENDING
+          enum:
+            - PENDING
+            - IN_PROGRESS
+            - COMPLETED
+
+    SignUpResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: 'Sign up successful'
+        user:
+          $ref: '#/components/schemas/User'
+    MileStoneRequest:
+      type: object
+      properties:
+        file:
+          format: binary
+          type: string
+        comment:
+          type: string
+          example: Could not find water resource
+    LoginResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: 'Logged in Successfully'
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          example: johndoe@neu.edu
+        password:
+          type: string
+          example: XSCSzaza=
+ 
+      required:
+        - email
+        - password
+    UserInfoResponse:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: 'user123'
+        fname:
+          type: string
+          example: 'John'
+        lname:
+          type: string
+          example: 'Doe'
+        email:
+          type: string
+          example: 'johndoe@example.com'
+        mobile:
+          type: string
+          example: '+1234567890'
+      required:
+        - userId
+        - fname
+        - lname
+        - email
+        - mobile
+
+    Badge:
+      type: object
+      properties:
+        badgeId:
+          type: string
+          example: 'badge123'
+        name:
+          type: string
+          example: 'Eco Warrior'
+        description:
+          type: string
+          example: 'Awarded for growing 5 plants.'
+      required:
+        - badgeId
+        - name
+        - description
+
+    BadgesResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/Badge'
+
+    LocationCenter:
+      type: object
+      properties:
+        centerId:
+          type: string
+          example: 'center123'
+        name:
+          type: string
+          example: 'GreatGreen Recycling Center'
+        address:
+          type: string
+          example: 'GreatGreen Mall'
+        latitude:
+          type: number
+          format: double
+          example: 40.712776
+        longitude:
+          type: number
+          format: double
+          example: -74.005974
+      required:
+        - centerId
+        - name
+        - address
+        - latitude
+        - longitude
+
+    LocationCentersResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/LocationCenter'
+    
+    ErrorStructure:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+              example: User friendly message
+            extra:
+              type: object
+
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 400
+        message:
+          type: string
+          example: 'Invalid request format'
+      required:
+        - code
+        - message
