@@ -8,7 +8,12 @@ import initalizeAuthentication from './initalize-authentication.js';
 import errorHandler from './middlewares/error-handler.js';
 
 const initalize = (app) => {
-  app.use(cors());
+  app.use(cors(
+    {
+      credentials: true,
+      origin: "http://localhost:5173",
+  }
+  ));
   app.use(express.json());
   app.use(express.urlencoded());
   mongoose.connect(process.env.MONGO_CONNECTION);

@@ -1,9 +1,32 @@
 import axios from 'axios';
-const HOST_URL = "http://localhost:3000/api/v1/"
-const  getURL = (path: string) => (`${HOST_URL}${path}`) 
+import { LoginFormInput } from '../models/login';
+import { toast } from 'react-toastify';
 
 
-export const getUser = async (params={}) => {
-  const userInfo = await axios.get(getURL("/auth/userinfo"), {params})
-  return userInfo;
+const HOST_URL = "http://localhost:3000/api/v1"
+const api = axios.create({
+  baseURL: HOST_URL,
+  withCredentials: true,
+  headers: {
+      "Content-type": "application/json",
+  },
+});
+
+
+const  getURL = (path: string) => (`${HOST_URL}${path}`);
+
+
+export const getUserInfo = (params={}) => {
+  return api.get(getURL("/auth/userinfo"), {params})
+}
+
+export const login = (data: LoginFormInput, cb: () => void) => {
+  return  api.post(getURL("/auth/login"), data).then(({data}) => {
+    console.log(data);
+    toast("Sucessfully logged in !");
+    cb();
+  }).catch(err => {
+    console.log(err);
+    toast( (err && err.response && err.response.data.message ) || "Login Failed !")
+  });
 }

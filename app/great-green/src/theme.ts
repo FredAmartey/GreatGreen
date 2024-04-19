@@ -8,6 +8,13 @@ export default createTheme({
         }
       }
     },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          borderRadius: 12
+        }
+      }
+    },
     MuiButton: {
       styleOverrides: {
         root: {
@@ -21,13 +28,13 @@ export default createTheme({
       light: "#487e4c",
       dark: "#124116",
       main: "#1b5e20",
-      contrastText: "#fffff"
+      contrastText: "#1f1f1f"
     },
     secondary: {
       dark: "#567d2e",
       light: "#96c267",
       main: "#7cb342",
-      contrastText: "#fffff"
+      contrastText: "#1f1f1f"
     },
     contrastThreshold: 3,
     tonalOffset: 0.2
@@ -47,7 +54,7 @@ export default createTheme({
       '"Segoe UI Symbol"',
     ].join(','), // prefer montserrat
       allVariants: {
-        color: "white" // Contrast color for the pallete
+        color: "#1f1f1f" // Contrast color for the pallete
       },
   },
 });

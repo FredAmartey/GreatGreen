@@ -6,7 +6,7 @@ export type UserState = User;
 
 
 const initiateState: UserState = {
-  _id: "",
+  username: "",
   name: "",
   email: "",
   gender: "",
@@ -29,6 +29,11 @@ export const { loadUserInfo } = usersSlice.actions;
 
 export const getUser = (): ((state: AppState) => UserState) => {
     return (state: AppState) => state.user;
+}
+export const isLoggedIn = (): ((state: AppState) => boolean) => {
+    return (state: AppState) => {
+      return !!state.user.username;
+    };
 }
 
 export default usersSlice.reducer;
