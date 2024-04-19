@@ -47,9 +47,6 @@ Great-Green invites contributions from a diverse range of individuals and organi
 # License
 Great-Green is open-source, available under the MIT License, promoting free and collaborative development and distribution.
 
-# Join the Movement
-Be a part of Great-Green's mission to transform desertified lands into thriving ecosystems. Your involvement can lead to a greener planet and a more sustainable future.
-
 
 # GreatGreen Object Model
 
