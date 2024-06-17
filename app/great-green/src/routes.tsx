@@ -2,6 +2,9 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import Login from "./pages/Login";
 import Journey from "./pages/Journey";
+import MyJourneys from "./pages/MyJourneys";
+import MyContributions from "./pages/Contributions";
+import LandingPage from "./pages/LandingPage";
 import Welcome from "./pages/Welcome";
 import Experience from "./pages/SelectExperience";
 import AssignKit from "./pages/AssigningKit";
@@ -12,13 +15,21 @@ const router = createBrowserRouter([
     Component: App,
     children: [
       {
-        Component: Journey,
+        Component: Welcome,
         index: true,
       },
-      /*{
-                path: '/user/:id',
-                Component: Div
-            }*/
+      {
+        path: "journeys",
+        Component: MyJourneys, // List all journeys and create /its id to display journey
+      },
+      {
+        path: "journeys/:id",
+        Component: Journey, // List all journeys and create /its id to display journey
+      },
+      {
+        path: "contributions",
+        Component: MyContributions, // List all journeys and create /its id to display journey
+      },
     ],
   },
   {
@@ -36,8 +47,8 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/welcome",
-    Component: Welcome,
+    path: "/",
+    Component: LandingPage,
   },
   {
     path: "/select-experience",

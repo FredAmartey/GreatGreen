@@ -1,6 +1,7 @@
 export interface Badge {
   name: string,
-  logo: string
+  logo: string,
+  _id: string,
 }
 
 export interface User {

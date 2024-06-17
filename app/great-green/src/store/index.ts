@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { usersSlice } from "./user-slice";
+import {journeysSlice} from "./journey-slice";
 export const store = configureStore({
   reducer: {
-    [usersSlice.name]: usersSlice.reducer
+    [usersSlice.name]: usersSlice.reducer,
+    [journeysSlice.name]: journeysSlice.reducer
 }
 }) ;
 export type AppStore = typeof store;

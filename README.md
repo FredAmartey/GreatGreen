@@ -1,6 +1,9 @@
 # GreatGreen
+Final Project for INFO 6150
 
 Great-Green is a pioneering web application designed to address the critical challenges of desertification, particularly in desert belts like the Sahel, through innovative reforestation and sustainable land management efforts. This platform not only focuses on planting trees but also introduces a unique model of engaging users in growing diverse crops, plants, and flowers. By integrating technology with environmental stewardship, Great-Green seeks to empower communities, foster biodiversity, and promote a sustainable model of ecological restoration.
+
+##### Note: Skip to last for setup instructions, Check PDF for presentation (Stylings are retained)
 
 # Background
 
@@ -39,13 +42,21 @@ However, despite these efforts, only 4% of the target has been completed thus fa
 * Interactive UI: React.js for an engaging frontend.
 * Efficient Backend: Node.js with Express for server-side logic.
 * Scalable Data Storage: MongoDB for data management.
-* Geographic Visualizations: Integration with OpenStreetMap
+* Geographic Visualizations: Integration with Leaflet map.
   
 # Contributing
 Great-Green invites contributions from a diverse range of individuals and organizations. Whether it's through coding, educating, or gardening, your participation can help drive global change. See our contributing guidelines for more details.
 
 # License
 Great-Green is open-source, available under the MIT License, promoting free and collaborative development and distribution.
+
+# Join the Movement
+Be a part of Great-Green's mission to transform desertified lands into thriving ecosystems. Your involvement can lead to a greener planet and a more sustainable future.
+
+# Team Members
+- Fred Amartey
+- Hitesh Krishnappa
+- Bhargav Chickmagalur Nanjundappa
 
 
 # GreatGreen Object Model
@@ -163,9 +174,42 @@ classDiagram
   Badge "1"*--"*" UserBadges
 
 ```
+## Workflow documentation
+![HighLevelOverview](/docs/GreatGreenHighlevel.jpeg)
+![HighLevelCompleteUserFlow](/docs/GreatGreenUserFlow.jpeg)
+
+<br/>
+
+## Screenshots
+![Login](/docs/snapshots/login.png)
+
+#### More screenshots in docs/snapshots folder
 
 
+## Pre-Requisites & Dependencies
+- Node v21.7.3
+- npm 10.5.0
+- Mongo DB
 
 ## API setup instructions
-- `cd api`
+- `cd service`
 - `sh setup.sh`
+
+## UI setup instructions
+- `cd app`
+- `npm i` installs all vite related packages
+- `cd great-green`
+- `npm i` installs all the UI dependent packages
+- `npm run dev` Runs application in dev mode
+- Change the HOST_URL in api.ts file to point to different server
+
+## Project Guide
+- The docs folder has all the documentation from UML to the API docs for the application
+- The files for the frontend app is present in app folder
+- The files for the backend is in service folder
+- The API has multiple base routes:
+  - auth for authentication endpoints - User Registration, User information, Login
+  - admin for Administrative endpoints - Administrative to add data to the endpoints ( Covers future use cases with inventory for the UN centers and management endpoint for support)
+  The remaining are end user endpoints which allow user to interact with the application
+
+- The user interface currently allows users to manage their journeys and contribute as well. The backend has more capabilities and functionalities.

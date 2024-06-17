@@ -2,6 +2,11 @@ import { Button, Grid, TextField } from "@mui/material";
 import { FormikProps } from "formik";
 import { LoginFormInput } from "../models/login";
 
+import { useTranslation } from "react-i18next";
+import { t } from "i18next";
+
+//const {t} = useTranslation('common');
+
 const LoginForm = (props: FormikProps<LoginFormInput>) => (
   <Grid container spacing={2} alignItems={"center"} justifyContent={"center"} padding={5}>
     <Grid item xs={8} textAlign={"center"}>
@@ -11,10 +16,10 @@ const LoginForm = (props: FormikProps<LoginFormInput>) => (
         error={!!(props.touched.username && props.errors.username)}
         type="email"
         fullWidth
-        placeholder="Enter Email"
+        placeholder={t("loginform.email.info")}
         sx={{ marginTop: "30px" }}
         color="secondary"
-        label="Email"
+        label={t("loginform.email")}
         margin="dense"
         variant="standard"
         value={props.values.username}
@@ -28,10 +33,10 @@ const LoginForm = (props: FormikProps<LoginFormInput>) => (
         error={!!(props.touched.password && props.errors.password)}
         type="password"
         fullWidth
-        placeholder="Enter Password"
+        placeholder={t("loginform.password.info")}
         sx={{ marginTop: "30px" }}
         color="secondary"
-        label="Password"
+        label={t("loginform.password")}
         margin="dense"
         variant="standard"
         value={props.values.password}
@@ -54,7 +59,7 @@ const LoginForm = (props: FormikProps<LoginFormInput>) => (
         variant="contained"
         color="primary"
       >
-        Login
+        {t("loginform.button")}
       </Button>
     </Grid>
   </Grid>

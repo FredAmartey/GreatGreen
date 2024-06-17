@@ -5,6 +5,7 @@ import { isLoggedIn, loadUserInfo } from '../store/user-slice';
 import { getUserInfo } from '../utils/api';
 import { useEffect, useState } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
+import { Backdrop } from '@mui/material';
 
 
 
@@ -36,7 +37,13 @@ const Authenticate = (props: Props) => {
   }, [loggedIn]);
 
   if(isLoading) {
-    return  <CircularProgress />;
+    return(
+    <Backdrop
+              sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+              open={isLoading}
+              >
+    <CircularProgress color="inherit" />
+  </Backdrop>);
   }
 
   if (props.loginPage) {

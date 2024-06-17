@@ -11,7 +11,15 @@ export default createTheme({
     MuiPaper: {
       styleOverrides: {
         root: {
-          borderRadius: 12
+          borderRadius: 12,
+          border: "1px solid #f1f1f1"
+        }
+      }
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          border: "1px solid #f1f1f1"
         }
       }
     },
@@ -28,13 +36,13 @@ export default createTheme({
       light: "#487e4c",
       dark: "#124116",
       main: "#1b5e20",
-      contrastText: "#1f1f1f"
+      contrastText: "#fffff"
     },
     secondary: {
       dark: "#567d2e",
       light: "#96c267",
       main: "#7cb342",
-      contrastText: "#1f1f1f"
+      contrastText: "#ffffff"
     },
     contrastThreshold: 3,
     tonalOffset: 0.2
