@@ -1,7 +1,6 @@
 # GreatGreen
-Final Project for INFO 6150
 
-Great-Green is a pioneering web application designed to address the critical challenges of desertification, particularly in desert belts like the Sahel, through innovative reforestation and sustainable land management efforts. This platform not only focuses on planting trees but also introduces a unique model of engaging users in growing diverse crops, plants, and flowers. By integrating technology with environmental stewardship, Great-Green seeks to empower communities, foster biodiversity, and promote a sustainable model of ecological restoration.
+Great-Green is a  web application designed to address the critical challenges of desertification, particularly in desert belts like the Sahel, through innovative reforestation and sustainable land management efforts. This platform not only focuses on planting trees but also introduces a unique model of engaging users in growing diverse crops, plants, and flowers. By integrating technology with environmental stewardship, Great-Green seeks to empower communities, foster biodiversity, and promote a sustainable model of ecological restoration.
 
 ##### Note: Skip to last for setup instructions, Check PDF for presentation (Stylings are retained)
 
@@ -52,11 +51,6 @@ Great-Green is open-source, available under the MIT License, promoting free and 
 
 # Join the Movement
 Be a part of Great-Green's mission to transform desertified lands into thriving ecosystems. Your involvement can lead to a greener planet and a more sustainable future.
-
-# Team Members
-- Fred Amartey
-- Hitesh Krishnappa
-- Bhargav Chickmagalur Nanjundappa
 
 
 # GreatGreen Object Model
